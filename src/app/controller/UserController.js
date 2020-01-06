@@ -2,6 +2,33 @@ import * as Yup from 'yup';
 import User from '../models/user';
 
 class UserController {
+  // List all User
+
+  async index(req, res) {
+    const { page = 1 } = req.query;
+
+    const users = await User.findAll({
+      order: ['id'],
+      limit: 10,
+      offset: (page - 1) * 10,
+    });
+
+    return res.json(users);
+  }
+
+  // List one User
+  async show(req, res) {
+    const { id } = req.params;
+
+    const users = await User.findByPk(id);
+    if (!users) {
+      return res.status(400).json({ Error: 'The user does not exist' });
+    }
+
+    return res.json(users);
+  }
+
+  // Create User
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
@@ -31,6 +58,8 @@ class UserController {
       email,
     });
   }
+
+  // Update User
 
   async update(req, res) {
     const schema = Yup.object().shape({

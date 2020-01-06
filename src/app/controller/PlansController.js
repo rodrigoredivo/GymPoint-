@@ -6,18 +6,32 @@ class PlansController {
   // List all plans
 
   async index(req, res) {
-    const plans = await Plans.findAll();
+    const { page = 1 } = req.query;
+
+    const plans = await Plans.findAll({
+      order: ['id'],
+      limit: 10,
+      offset: (page - 1) * 10,
+    });
 
     return res.json(plans);
   }
 
+  // List one plan
+
   async show(req, res) {
-    const plan = await Plans.findOne();
+    const { id } = req.params;
+
+    const plan = await Plans.findByPk(id);
+
+    if (!plan) {
+      return res.status(400).json({ error: 'The plan does not exist' });
+    }
 
     return res.json(plan);
   }
 
-  // Create
+  // Create plan
 
   async store(req, res) {
     const schema = Yup.object().shape({
@@ -56,6 +70,8 @@ class PlansController {
   // Update/Edit
 
   async update(req, res) {
+    // Validation
+
     const schema = Yup.object().shape({
       title: Yup.string().required(),
       duration: Yup.number()
@@ -63,8 +79,6 @@ class PlansController {
         .integer(),
       price: Yup.number().positive(),
     });
-
-    // Validation
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
