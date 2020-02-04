@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img alt="Gympoint" title="Gympoint" src="https://raw.githubusercontent.com/Rocketseat/bootcamp-gostack-desafio-03/master/.github/logo.png" width="200px" />
+  <img alt="Gympoint" title="Gympoint" src="https://lh3.googleusercontent.com/YxNapOy1UYYGLqcTzeb1Ubc-nX1xVJ5VRYPkJNzJS650_Hb_sMDfDJEClIQniklWIosG0YyW=w1080-h608-p-no-v0" width="200px" />
 </h1>
 
 <h2 align="center">
